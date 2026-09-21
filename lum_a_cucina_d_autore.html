@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="it" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUMÉA — Cucina d’Autore | Fine Dining Milano</title>
+  <meta name="description" content="LUMÉA è un’esperienza di alta cucina italiana contemporanea guidata dallo Chef Alessandro Verri. La materia incontra la meraviglia nel cuore di Milano.">
+  <meta name="theme-color" content="#0B0B0C">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="LUMÉA — Cucina d’Autore">
+  <meta property="og:description" content="La materia incontra la meraviglia. Ristorante di alta cucina contemporanea a Milano.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?q=80&w=1600&auto=format&fit=crop">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            lumea: {
+              black: '#0B0B0C',
+              darker: '#060607',
+              card: '#121214',
+              border: '#222226',
+              gold: '#D4AF37',
+              goldMuted: '#A38430',
+              cream: '#F9F8F6',
+              sand: '#E8E4DF',
+              muted: '#8A8A93'
+            }
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif']
+          },
+          letterSpacing: {
+            widest: '0.25em',
+            ultra: '0.35em'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.9/dist/lenis.css">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "LUMÉA — Cucina d'Autore",
+    "image": "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?q=80&w=1600&auto=format&fit=crop",
+    "servesCuisine": "Fine Dining Contemporary Italian",
+    "priceRange": "€€€€",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Via della Luce 18",
+      "addressLocality": "Milano",
+      "postalCode": "20121",
+      "addressCountry": "IT"
+    },
+    "telephone": "+390200000000",
+    "url": "https://lumea-restaurant.it",
+    "chef": {
+      "@type": "Person",
+      "name": "Alessandro Verri"
+    }
+  }
+  </script>
+
+  <style>
+    /* Custom Scrollbar & General Reset */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0B0C;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #222226;
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #D4AF37;
+    }
+
+    body {
+      background-color: #0B0B0C;
+      color: #F9F8F6;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* Custom Cursor Style */
+    .custom-cursor {
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: transform 0.15s ease-out, opacity 0.3s ease;
+    }
+
+    /* Grain Overlay Effect */
+    .bg-grain {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+    }
+
+    /* Text Outline & Luxury Effects */
+    .text-outline {
+      -webkit-text-stroke: 1px rgba(249, 248, 246, 0.25);
+      color: transparent;
+    }
+    .text-outline-gold {
+      -webkit-text-stroke: 1px rgba(212, 175, 55, 0.4);
+      color: transparent;
+    }
+
+    /* Magnetic Button Wrapper */
+    .magnetic-wrap {
+      display: inline-block;
+      position: relative;
+    }
+
+    /* Clip Path Utilities */
+    .clip-hide {
+      clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+    .clip-show {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    /* Glass Effect */
+    .glass-nav {
+      background: rgba(11, 11, 12, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Hide Touch Cursor on Mobile Devices */
+    @media (pointer: coarse) {
+      .custom-cursor {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="font-sans antialiased selection:bg-lumea-gold selection:text-lumea-black">
+
+  <!-- CUSTOM CURSOR -->
+  <div id="cursor-dot" class="custom-cursor w-3 h-3 rounded-full bg-lumea-cream opacity-0 md:opacity-100"></div>
+  <div id="cursor-circle" class="custom-cursor w-10 h-10 -ml-3.5 -mt-3.5 rounded-full border border-lumea-gold/60 opacity-0 md:opacity-100 transition-all duration-300"></div>
+
+  <!-- INTRO SCREEN LOADER -->
+  <div id="intro-loader" class="fixed inset-0 z-[100] bg-lumea-black flex flex-col items-center justify-center pointer-events-auto">
+    <div id="intro-line" class="w-[1px] h-0 bg-lumea-gold mb-8 transition-all"></div>
+    <div id="intro-logo" class="opacity-0 tracking-ultra font-serif text-3xl md:text-5xl font-light text-lumea-cream uppercase">
+      LUMÉA
+    </div>
+    <p id="intro-sub" class="opacity-0 font-sans text-xs tracking-widest text-lumea-gold uppercase mt-3">
+      Cucina d’Autore
+    </p>
+  </div>
+
+  <!-- TOP READING PROGRESS BAR -->
+  <div id="progress-bar" class="fixed top-0 left-0 h-[2px] bg-gradient-to-r from-lumea-gold/40 via-lumea-gold to-lumea-cream z-[90] w-0"></div>
+
+  <!-- NOISE OVERLAY -->
+  <div class="fixed inset-0 bg-grain pointer-events-none z-50"></div>
+
+  <!-- NAVBAR -->
+  <header id="main-header" class="fixed top-0 left-0 right-0 z-40 transition-all duration-500 py-6 px-6 md:px-12">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      
+      <!-- LOGO -->
+      <a href="#hero" class="group flex flex-col">
+        <span class="font-serif text-2xl md:text-3xl font-light tracking-widest text-lumea-cream group-hover:text-lumea-gold transition-colors duration-300">
+          LUMÉA
+        </span>
+        <span class="text-[9px] tracking-ultra uppercase text-lumea-gold font-mono opacity-80 -mt-1">
+          Milano
+        </span>
+      </a>
+
+      <!-- DESKTOP NAVIGATION -->
+      <nav class="hidden lg:flex items-center space-x-10">
+        <a href="#ristorante" class="text-xs uppercase tracking-widest text-lumea-sand hover:text-lumea-gold transition-colors duration-300">IL RISTORANTE</a>
+        <a href="#menu" class="text-xs uppercase tracking-widest text-lumea-sand hover:text-lumea-gold transition-colors duration-300">MENU</a>
+        <a href="#chef" class="text-xs uppercase tracking-widest text-lumea-sand hover:text-lumea-gold transition-colors duration-300">LO CHEF</a>
+        <a href="#esperienza" class="text-xs uppercase tracking-widest text-lumea-sand hover:text-lumea-gold transition-colors duration-300">ESPERIENZA</a>
+        <a href="#galleria" class="text-xs uppercase tracking-widest text-lumea-sand hover:text-lumea-gold transition-colors duration-300">GALLERIA</a>
+        <a href="#contatti" class="text-xs uppercase tracking-widest text-lumea-sand hover:text-lumea-gold transition-colors duration-300">CONTATTI</a>
+      </nav>
+
+      <!-- CTA PRENOTA BUTTON -->
+      <div class="hidden sm:block">
+        <button onclick="openBookingModal()" class="magnetic-wrap relative inline-flex items-center justify-center px-6 py-2.5 text-xs tracking-ultra uppercase text-lumea-gold border border-lumea-gold/40 rounded-none overflow-hidden group transition-all duration-500 hover:border-lumea-gold">
+          <span class="absolute inset-0 bg-lumea-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></span>
+          <span class="relative z-10 group-hover:text-lumea-black transition-colors duration-300 font-medium">PRENOTA</span>
+        </button>
+      </div>
+
+      <!-- MOBILE MENU TRIGGER -->
+      <button id="mobile-toggle" onclick="toggleMobileMenu()" aria-label="Apri menu" class="lg:hidden p-2 text-lumea-cream hover:text-lumea-gold transition-colors">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+
+    </div>
+  </header>
+
+  <!-- MOBILE MENU OVERLAY -->
+  <div id="mobile-menu" class="fixed inset-0 z-50 bg-lumea-darker flex flex-col justify-between p-8 md:p-12 transition-all duration-700 opacity-0 pointer-events-none translate-y-full">
+    <div class="flex items-center justify-between">
+      <span class="font-serif text-2xl tracking-widest text-lumea-cream">LUMÉA</span>
+      <button onclick="toggleMobileMenu()" class="p-2 text-lumea-sand hover:text-lumea-gold">
+        <i data-lucide="x" class="w-8 h-8"></i>
+      </button>
+    </div>
+
+    <div class="flex flex-col space-y-6 my-auto text-center">
+      <a href="#ristorante" onclick="toggleMobileMenu()" class="font-serif text-2xl md:text-3xl text-lumea-sand hover:text-lumea-gold transition-colors">Il Ristorante</a>
+      <a href="#menu" onclick="toggleMobileMenu()" class="font-serif text-2xl md:text-3xl text-lumea-sand hover:text-lumea-gold transition-colors">Menu</a>
+      <a href="#chef" onclick="toggleMobileMenu()" class="font-serif text-2xl md:text-3xl text-lumea-sand hover:text-lumea-gold transition-colors">Lo Chef</a>
+      <a href="#esperienza" onclick="toggleMobileMenu()" class="font-serif text-2xl md:text-3xl text-lumea-sand hover:text-lumea-gold transition-colors">Esperienza</a>
+      <a href="#galleria" onclick="toggleMobileMenu()" class="font-serif text-2xl md:text-3xl text-lumea-sand hover:text-lumea-gold transition-colors">Galleria</a>
+      <a href="#contatti" onclick="toggleMobileMenu()" class="font-serif text-2xl md:text-3xl text-lumea-sand hover:text-lumea-gold transition-colors">Contatti</a>
+    </div>
+
+    <div class="pt-6 border-t border-lumea-border flex flex-col items-center gap-4">
+      <button onclick="toggleMobileMenu(); openBookingModal();" class="w-full py-4 bg-lumea-gold text-lumea-black font-medium tracking-widest text-xs uppercase">
+        PRENOTA UN TAVOLO
+      </button>
+      <p class="text-xs text-lumea-muted font-light">Via della Luce 18, Milano · +39 02 0000 0000</p>
+    </div>
+  </div>
+
+  <!-- MAIN WRAPPER -->
+  <main id="smooth-wrapper">
+    <div id="smooth-content">
+
+      <!-- SECTION 1: HERO SECTION -->
+      <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        
+        <!-- Background Image with Parallax & Dark Overlay -->
+        <div class="absolute inset-0 z-0 scale-105" id="hero-bg">
+          <img 
+            src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=2000&auto=format&fit=crop" 
+            alt="LUMÉA Fine Dining Atmosphere" 
+            class="w-full h-full object-cover object-center filter brightness-[0.45] contrast-125 saturate-90"
+          >
+          <div class="absolute inset-0 bg-gradient-to-t from-lumea-black via-lumea-black/40 to-lumea-black/80"></div>
+          <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-lumea-black/30 to-lumea-black"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center flex flex-col items-center my-auto">
+          
+          <div class="overflow-hidden mb-4">
+            <span id="hero-sub" class="block font-mono text-xs md:text-sm tracking-ultra text-lumea-gold uppercase opacity-0">
+              Cucina d’autore italiana · Milano
+            </span>
+          </div>
+
+          <div class="overflow-hidden mb-6">
+            <h1 id="hero-title" class="font-serif text-5xl sm:text-7xl md:text-9xl font-light tracking-wide text-lumea-cream opacity-0 leading-tight">
+              LUMÉA
+            </h1>
+          </div>
+
+          <div class="overflow-hidden max-w-2xl mb-12">
+            <p id="hero-payoff" class="font-serif italic text-xl sm:text-2xl md:text-3xl text-lumea-sand/90 font-light opacity-0">
+              “La materia incontra la meraviglia.”
+            </p>
+          </div>
+
+          <!-- Hero CTAs -->
+          <div id="hero-cta" class="flex flex-col sm:flex-row items-center gap-6 opacity-0">
+            <a href="#esperienza" class="w-full sm:w-auto px-8 py-4 bg-lumea-cream text-lumea-black text-xs tracking-ultra font-semibold uppercase hover:bg-lumea-gold transition-colors duration-300 text-center">
+              SCOPRI L’ESPERIENZA
+            </a>
+            <button onclick="openBookingModal()" class="w-full sm:w-auto px-8 py-4 border border-lumea-gold/50 text-lumea-cream hover:text-lumea-black hover:bg-lumea-gold text-xs tracking-ultra font-medium uppercase transition-all duration-300">
+              PRENOTA UN TAVOLO
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-opacity">
+          <span class="text-[10px] tracking-ultra text-lumea-sand uppercase font-mono">SCROLL TO DISCOVER</span>
+          <div class="w-4 h-7 border border-lumea-gold/40 rounded-full flex justify-center p-1">
+            <div class="w-1 h-1.5 bg-lumea-gold rounded-full animate-bounce"></div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- SECTION 2: EDITORIAL STATEMENT -->
+      <section id="ristorante" class="py-32 md:py-48 px-6 relative bg-lumea-black">
+        <div class="max-w-4xl mx-auto text-center">
+          
+          <span class="text-xs uppercase tracking-ultra font-mono text-lumea-gold mb-6 block">MANIFESTO</span>
+          
+          <h2 id="editorial-text" class="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-lumea-cream leading-snug md:leading-tight mb-12">
+            “Non cuciniamo semplicemente ingredienti. <br class="hidden md:inline"/>
+            <span class="italic text-lumea-gold font-normal">Raccontiamo</span> ciò che possono diventare.”
+          </h2>
+
+          <div class="w-16 h-[1px] bg-lumea-gold/40 mx-auto mb-12"></div>
+
+          <p class="font-sans text-lumea-sand/80 text-base md:text-lg leading-relaxed font-light max-w-2xl mx-auto">
+            LUMÉA nasce dall’incontro tra memoria e ricerca. Ogni piatto parte da un ingrediente italiano d’eccellenza, attraversa tecniche contemporanee d’avanguardia e arriva al tavolo trasformato in un’emozione pura.
+          </p>
+
+        </div>
+      </section>
+
+      <!-- SECTION 3: LA NOSTRA FILOSOFIA -->
+      <section class="py-24 px-6 md:px-12 bg-lumea-darker border-t border-b border-lumea-border/40">
+        <div class="max-w-7xl mx-auto">
+          
+          <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
+            <div>
+              <span class="text-xs uppercase tracking-ultra font-mono text-lumea-gold block mb-2">01 / I PILASTRI</span>
+              <h2 class="font-serif text-4xl md:text-6xl text-lumea-cream font-light">La Nostra Filosofia</h2>
+            </div>
+            <p class="text-lumea-muted text-sm max-w-md font-light">
+              Quattro concetti fondamentali guidano ogni nostra creazione, dalla scelta della materia prima all’accoglienza in sala.
+            </p>
+          </div>
+
+          <!-- Interactive Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <!-- Item 01 -->
+            <div class="group relative p-8 bg-lumea-black/60 border border-lumea-border hover:border-lumea-gold/50 transition-all duration-500 flex flex-col justify-between h-[420px] overflow-hidden">
+              <div class="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none">
+                <img src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700" alt="Materia">
+              </div>
+              <div class="relative z-10">
+                <span class="font-serif text-5xl font-light text-lumea-gold/40 group-hover:text-lumea-gold group-hover:scale-110 transition-all duration-500 block mb-6">01</span>
+                <h3 class="font-serif text-2xl text-lumea-cream tracking-wide mb-3">MATERIA</h3>
+                <p class="text-xs text-lumea-sand/70 leading-relaxed font-light">
+                  Selezioniamo solo piccoli produttori virtuosi. Piccole produzioni, biodiversità protetta, rispetto assoluto della stagionalità naturale.
+                </p>
+              </div>
+              <div class="relative z-10 pt-4 border-t border-lumea-border/60 group-hover:border-lumea-gold/40 transition-colors">
+                <span class="text-[10px] tracking-ultra text-lumea-gold font-mono uppercase">ORIGINE CERTIFICATA</span>
+              </div>
+            </div>
+
+            <!-- Item 02 -->
+            <div class="group relative p-8 bg-lumea-black/60 border border-lumea-border hover:border-lumea-gold/50 transition-all duration-500 flex flex-col justify-between h-[420px] overflow-hidden">
+              <div class="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700" alt="Memoria">
+              </div>
+              <div class="relative z-10">
+                <span class="font-serif text-5xl font-light text-lumea-gold/40 group-hover:text-lumea-gold group-hover:scale-110 transition-all duration-500 block mb-6">02</span>
+                <h3 class="font-serif text-2xl text-lumea-cream tracking-wide mb-3">MEMORIA</h3>
+                <p class="text-xs text-lumea-sand/70 leading-relaxed font-light">
+                  L'eredità culinaria italiana reinterpretata. Ricordi d'infanzia e ricette tradizionali proiettate nel futuro con sensibilità moderna.
+                </p>
+              </div>
+              <div class="relative z-10 pt-4 border-t border-lumea-border/60 group-hover:border-lumea-gold/40 transition-colors">
+                <span class="text-[10px] tracking-ultra text-lumea-gold font-mono uppercase">RADICI ITALIANE</span>
+              </div>
+            </div>
+
+            <!-- Item 03 -->
+            <div class="group relative p-8 bg-lumea-black/60 border border-lumea-border hover:border-lumea-gold/50 transition-all duration-500 flex flex-col justify-between h-[420px] overflow-hidden">
+              <div class="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none">
+                <img src="https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700" alt="Ricerca">
+              </div>
+              <div class="relative z-10">
+                <span class="font-serif text-5xl font-light text-lumea-gold/40 group-hover:text-lumea-gold group-hover:scale-110 transition-all duration-500 block mb-6">03</span>
+                <h3 class="font-serif text-2xl text-lumea-cream tracking-wide mb-3">RICERCA</h3>
+                <p class="text-xs text-lumea-sand/70 leading-relaxed font-light">
+                  Estrazioni a freddo, fermentazioni controllate, cotture millimetriche. La tecnologia al servizio dell'esaltazione del sapore.
+                </p>
+              </div>
+              <div class="relative z-10 pt-4 border-t border-lumea-border/60 group-hover:border-lumea-gold/40 transition-colors">
+                <span class="text-[10px] tracking-ultra text-lumea-gold font-mono uppercase">INNOVAZIONE CULINARIA</span>
+              </div>
+            </div>
+
+            <!-- Item 04 -->
+            <div class="group relative p-8 bg-lumea-black/60 border border-lumea-border hover:border-lumea-gold/50 transition-all duration-500 flex flex-col justify-between h-[420px] overflow-hidden">
+              <div class="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none">
+                <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700" alt="Meraviglia">
+              </div>
+              <div class="relative z-10">
+                <span class="font-serif text-5xl font-light text-lumea-gold/40 group-hover:text-lumea-gold group-hover:scale-110 transition-all duration-500 block mb-6">04</span>
+                <h3 class="font-serif text-2xl text-lumea-cream tracking-wide mb-3">MERAVIGLIA</h3>
+                <p class="text-xs text-lumea-sand/70 leading-relaxed font-light">
+                  L'impatto visivo, il profumo inaspettato, la consistenza che sorprende. Ogni piatto è concepito come un'opera teatrale sensoriale.
+                </p>
+              </div>
+              <div class="relative z-10 pt-4 border-t border-lumea-border/60 group-hover:border-lumea-gold/40 transition-colors">
+                <span class="text-[10px] tracking-ultra text-lumea-gold font-mono uppercase">EMOZIONE VISIVA</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 4: MENU / IL PERCORSO -->
+      <section id="menu" class="py-32 px-6 md:px-12 bg-lumea-black relative">
+        <div class="max-w-7xl mx-auto">
+          
+          <div class="text-center max-w-2xl mx-auto mb-20">
+            <span class="text-xs uppercase tracking-ultra font-mono text-lumea-gold mb-3 block">ESPERIENZE GASTRONOMICHE</span>
+            <h2 class="font-serif text-4xl md:text-6xl text-lumea-cream font-light mb-4">Il Percorso</h2>
+            <p class="text-sm text-lumea-sand/80 font-light">
+              Tre degustazioni guidate per esplorare l'universo creativo dello Chef Alessandro Verri.
+            </p>
+          </div>
+
+          <!-- Tasting Menu Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Menu 1 -->
+            <div class="group relative bg-lumea-card border border-lumea-border p-8 md:p-10 flex flex-col justify-between hover:border-lumea-gold transition-all duration-500">
+              <div>
+                <div class="flex justify-between items-baseline mb-6 border-b border-lumea-border/60 pb-4">
+                  <h3 class="font-serif text-3xl text-lumea-cream group-hover:text-lumea-gold transition-colors">LUMÉA</h3>
+                  <span class="font-serif text-2xl text-lumea-gold">€145</span>
+                </div>
+                <span class="inline-block text-[10px] font-mono tracking-widest text-lumea-muted uppercase mb-4">9 PORTATE · DEGUSTAZIONE COMPLETA</span>
+                <p class="text-sm text-lumea-sand/80 font-light leading-relaxed mb-8">
+                  “Un viaggio completo attraverso la visione contemporanea dello chef. Dai classici reinventati alle ultime sperimentazioni.”
+                </p>
+              </div>
+              <div>
+                <p class="text-[11px] text-lumea-muted mb-6 italic">Abbinamento vini d'autore disponibile su richiesta (+€90)</p>
+                <button onclick="openBookingModal('LUMÉA - 9 Portate')" class="w-full py-3.5 border border-lumea-gold/40 text-xs tracking-ultra uppercase text-lumea-cream group-hover:bg-lumea-gold group-hover:text-lumea-black transition-all duration-300">
+                  SCEGLI QUESTO PERCORSO
+                </button>
+              </div>
+            </div>
+
+            <!-- Menu 2 -->
+            <div class="group relative bg-lumea-card border border-lumea-border p-8 md:p-10 flex flex-col justify-between hover:border-lumea-gold transition-all duration-500 relative overflow-hidden">
+              <div class="absolute top-0 right-0 bg-lumea-gold text-lumea-black text-[9px] font-mono uppercase tracking-widest px-3 py-1 font-semibold">
+                SIGNATURE
+              </div>
+              <div>
+                <div class="flex justify-between items-baseline mb-6 border-b border-lumea-border/60 pb-4">
+                  <h3 class="font-serif text-3xl text-lumea-cream group-hover:text-lumea-gold transition-colors">ORIGINI</h3>
+                  <span class="font-serif text-2xl text-lumea-gold">€110</span>
+                </div>
+                <span class="inline-block text-[10px] font-mono tracking-widest text-lumea-muted uppercase mb-4">6 PORTATE · ESSENZA ITALIANA</span>
+                <p class="text-sm text-lumea-sand/80 font-light leading-relaxed mb-8">
+                  “L’essenza della grande cucina italiana interpretata attraverso la semplicità e il rispetto assoluto degli ingredienti storici.”
+                </p>
+              </div>
+              <div>
+                <p class="text-[11px] text-lumea-muted mb-6 italic">Abbinamento vini d'autore disponibile su richiesta (+€70)</p>
+                <button onclick="openBookingModal('ORIGINI - 6 Portate')" class="w-full py-3.5 border border-lumea-gold/40 text-xs tracking-ultra uppercase text-lumea-cream group-hover:bg-lumea-gold group-hover:text-lumea-black transition-all duration-300">
+                  SCEGLI QUESTO PERCORSO
+                </button>
+              </div>
+            </div>
+
+            <!-- Menu 3 -->
+            <div class="group relative bg-lumea-card border border-lumea-border p-8 md:p-10 flex flex-col justify-between hover:border-lumea-gold transition-all duration-500">
+              <div>
+                <div class="flex justify-between items-baseline mb-6 border-b border-lumea-border/60 pb-4">
+                  <h3 class="font-serif text-3xl text-lumea-cream group-hover:text-lumea-gold transition-colors">VEGETALE</h3>
+                  <span class="font-serif text-2xl text-lumea-gold">€125</span>
+                </div>
+                <span class="inline-block text-[10px] font-mono tracking-widest text-lumea-muted uppercase mb-4">7 PORTATE · BOTANICA CONTEMPORANEA</span>
+                <p class="text-sm text-lumea-sand/80 font-light leading-relaxed mb-8">
+                  “Un percorso interamente dedicato alla materia vegetale, erbe spontanee, radici, e fermentazioni naturali d'alta quota.”
+                </p>
+              </div>
+              <div>
+                <p class="text-[11px] text-lumea-muted mb-6 italic">Abbinamento estratti botanici e tisane rare (+€55)</p>
+                <button onclick="openBookingModal('VEGETALE - 7 Portate')" class="w-full py-3.5 border border-lumea-gold/40 text-xs tracking-ultra uppercase text-lumea-cream group-hover:bg-lumea-gold group-hover:text-lumea-black transition-all duration-300">
+                  SCEGLI QUESTO PERCORSO
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="mt-12 text-center text-xs text-lumea-muted font-light">
+            * I menu degustazione si intendono serviti per l'intero tavolo. Informare il personale per allergie o intolleranze alimentari.
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 5: SIGNATURE DISHES (HORIZONTAL SCROLL) -->
+      <section id="signature-section" class="relative bg-lumea-darker overflow-hidden py-24">
+        
+        <div class="px-6 md:px-12 max-w-7xl mx-auto mb-12">
+          <span class="text-xs uppercase tracking-ultra font-mono text-lumea-gold mb-2 block">02 / LE CREAZIONI</span>
+          <h2 class="font-serif text-4xl md:text-6xl text-lumea-cream font-light">Piatti Signature</h2>
+        </div>
+
+        <!-- Horizontal Track Container -->
+        <div id="horizontal-track" class="flex space-x-8 px-6 md:px-12 w-max">
+          
+          <!-- Dish 1 -->
+          <div class="w-[85vw] sm:w-[500px] md:w-[600px] bg-lumea-card border border-lumea-border flex flex-col justify-between p-8 md:p-10 shrink-0 group">
+            <div class="overflow-hidden mb-8 h-80 w-full relative">
+              <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter brightness-90" alt="Bosco">
+              <span class="absolute top-4 left-4 font-serif text-4xl text-lumea-cream/80 bg-lumea-black/60 px-3 py-1 border border-lumea-border">01</span>
+            </div>
+            <div>
+              <h3 class="font-serif text-3xl text-lumea-cream mb-2 group-hover:text-lumea-gold transition-colors">“Bosco”</h3>
+              <p class="text-sm text-lumea-sand/80 font-light leading-relaxed">
+                Raviolo trasparente alle erbe spontanee, cèpe di montagna, spuma di nocciola tonda gentile affumicata e brodo concentrato di pino silvestre.
+              </p>
+            </div>
+          </div>
+
+          <!-- Dish 2 -->
+          <div class="w-[85vw] sm:w-[500px] md:w-[600px] bg-lumea-card border border-lumea-border flex flex-col justify-between p-8 md:p-10 shrink-0 group">
+            <div class="overflow-hidden mb-8 h-80 w-full relative">
+              <img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter brightness-90" alt="Adriatico">
+              <span class="absolute top-4 left-4 font-serif text-4xl text-lumea-cream/80 bg-lumea-black/60 px-3 py-1 border border-lumea-border">02</span>
+            </div>
+            <div>
+              <h3 class="font-serif text-3xl text-lumea-cream mb-2 group-hover:text-lumea-gold transition-colors">“Adriatico”</h3>
+              <p class="text-sm text-lumea-sand/80 font-light leading-relaxed">
+                Scampo crudo di Manfredonia, concassé di pomodoro affumicato ai legni di ulivo, gelatina di basilico acido ed essenza purissima di agrumi di Sicilia.
+              </p>
+            </div>
+          </div>
+
+          <!-- Dish 3 -->
+          <div class="w-[85vw] sm:w-[500px] md:w-[600px] bg-lumea-card border border-lumea-border flex flex-col justify-between p-8 md:p-10 shrink-0 group">
+            <div class="overflow-hidden mb-8 h-80 w-full relative">
+              <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter brightness-90" alt="Terra">
+              <span class="absolute top-4 left-4 font-serif text-4xl text-lumea-cream/80 bg-lumea-black/60 px-3 py-1 border border-lumea-border">03</span>
+            </div>
+            <div>
+              <h3 class="font-serif text-3xl text-lumea-cream mb-2 group-hover:text-lumea-gold transition-colors">“Terra”</h3>
+              <p class="text-sm text-lumea-sand/80 font-light leading-relaxed">
+                Guancia di manzo piemontese brasata al Barolo riserva, purea soffice di sedano rapa al burro nocciola e riduzione di spezie rare.
+              </p>
+            </div>
+          </div>
+
+          <!-- Dish 4 -->
+          <div class="w-[85vw] sm:w-[500px] md:w-[600px] bg-lumea-card border border-lumea-border flex flex-col justify-between p-8 md:p-10 shrink-0 group">
+            <div class="overflow-hidden mb-8 h-80 w-full relative">
+              <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter brightness-90" alt="Luce">
+              <span class="absolute top-4 left-4 font-serif text-4xl text-lumea-cream/80 bg-lumea-black/60 px-3 py-1 border border-lumea-border">04</span>
+            </div>
+            <div>
+              <h3 class="font-serif text-3xl text-lumea-cream mb-2 group-hover:text-lumea-gold transition-colors">“Luce”</h3>
+              <p class="text-sm text-lumea-sand/80 font-light leading-relaxed">
+                Soffice di mandorla di Noto, sorbetto al limone sfusato di Amalfi, crema alla vaniglia Bourbon e perle d'olio extravergine monocultivar.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- SECTION 6: CHEF ALESSANDRO VERRI -->
+      <section id="chef" class="py-32 px-6 md:px-12 bg-lumea-black relative overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+          
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            <!-- Chef Portrait -->
+            <div class="lg:col-span-5 relative">
+              <div class="relative z-10 aspect-[3/4] overflow-hidden border border-lumea-border">
+                <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover filter grayscale contrast-125 hover:grayscale-0 transition-all duration-700" alt="Chef Alessandro Verri">
+              </div>
+              <div class="absolute -bottom-6 -right-6 w-48 h-48 border border-lumea-gold/30 -z-0 hidden sm:block"></div>
+            </div>
+
+            <!-- Chef Narrative -->
+            <div class="lg:col-span-7 flex flex-col justify-center">
+              <span class="text-xs uppercase tracking-ultra font-mono text-lumea-gold mb-3 block">LO CHEF & FONDATORE</span>
+              <h2 class="font-serif text-4xl md:text-6xl text-lumea-cream font-light mb-6">Alessandro Verri</h2>
+              <p class="font-serif italic text-2xl text-lumea-gold/90 mb-8 font-light">
+                “Per me la cucina è una forma di memoria viva. Ogni ingrediente custodisce un luogo, una stagione e l'anima di chi lo ha coltivato.”
+              </p>
+              <p class="text-lumea-sand/80 text-sm leading-relaxed font-light mb-12">
+                Dopo anni trascorsi nelle brigate dei più prestigiosi tre stelle Michelin tra Milano, Parigi, Tokyo e Copenhagen, Alessandro Verri torna in Italia per dare vita a LUMÉA. Il suo approccio unisce il rigore delle tecniche contemporanee con il rispetto profondo per l'identità gastronomica italiana.
+              </p>
+
+              <!-- Career Timeline -->
+              <div class="space-y-6 border-l border-lumea-border pl-6 relative">
+                
+                <div class="relative group">
+                  <span class="absolute -left-[31px] top-1.5 w-2 h-2 rounded-full bg-lumea-gold"></span>
+                  <span class="font-mono text-xs text-lumea-gold">2008 — MILANO</span>
+                  <p class="text-xs text-lumea-cream font-medium">Primi passi nella grande cucina milanese d'autore</p>
+                </div>
+
+                <div class="relative group">
+                  <span class="absolute -left-[31px] top-1.5 w-2 h-2 rounded-full bg-lumea-border group-hover:bg-lumea-gold transition-colors"></span>
+                  <span class="font-mono text-xs text-lumea-muted">2012 — PARIGI</span>
+                  <p class="text-xs text-lumea-sand font-light">Perfezionamento delle salse classiche e disciplina d'alta brigata</p>
+                </div>
+
+                <div class="relative group">
+                  <span class="absolute -left-[31px] top-1.5 w-2 h-2 rounded-full bg-lumea-border group-hover:bg-lumea-gold transition-colors"></span>
+                  <span class="font-mono text-xs text-lumea-muted">2016 — TOKYO</span>
+                  <p class="text-xs text-lumea-sand font-light">Studio della precisione millimetrica e dell'estrazione dell'Umami</p>
+                </div>
+
+                <div class="relative group">
+                  <span class="absolute -left-[31px] top-1.5 w-2 h-2 rounded-full bg-lumea-border group-hover:bg-lumea-gold transition-colors"></span>
+                  <span class="font-mono text-xs text-lumea-muted">2019 — COPENHAGEN</span>
+                  <p class="text-xs text-lumea-sand font-light">Approfondimento della botanica, fermentazione ed erbe spontanee</p>
+                </div>
+
+                <div class="relative group">
+                  <span class="absolute -left-[31px] top-1.5 w-2 h-2 rounded-full bg-lumea-gold shadow-[0_0_8px_#D4AF37]"></span>
+                  <span class="font-mono text-xs text-lumea-gold font-bold">2024 — LUMÉA MILANO</span>
+                  <p class="text-xs text-lumea-cream font-medium">Nascita del progetto personale “Cucina d’Autore”</p>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 7: UNO SPAZIO PENSATO PER RALLENTARE -->
+      <section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden py-24">
+        
+        <div class="absolute inset-0 z-0">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2000&auto=format&fit=crop" class="w-full h-full object-cover filter brightness-[0.35] contrast-125" alt="LUMÉA Interior">
+          <div class="absolute inset-0 bg-gradient-to-t from-lumea-black via-transparent to-lumea-black"></div>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+          <span class="text-xs uppercase tracking-ultra font-mono text-lumea-gold mb-4 block">L'ATMOSFERA</span>
+          <h2 class="font-serif text-4xl sm:text-6xl text-lumea-cream font-light mb-8">
+            Uno Spazio Pensato per Rallentare
+          </h2>
+          <p class="text-lumea-sand/90 text-base md:text-lg leading-relaxed font-light max-w-2xl mx-auto mb-16">
+            Un palazzo storico milanese restaurato con rispetto minimalista. Pietra naturale, vetro fumé, legno scuro bruciato e luci calde studiate per valorizzare ogni singola portata.
+          </p>
+
+          <!-- Key Stats Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 border-t border-b border-lumea-cream/20 py-8">
+            <div class="flex flex-col items-center">
+              <span class="font-serif text-5xl text-lumea-gold font-light mb-1">32</span>
+              <span class="text-[10px] tracking-ultra text-lumea-sand font-mono uppercase">POSTI ESCLUSIVI</span>
+            </div>
+            <div class="flex flex-col items-center border-y sm:border-y-0 sm:border-x border-lumea-cream/20 py-4 sm:py-0">
+              <span class="font-serif text-5xl text-lumea-gold font-light mb-1">1</span>
+              <span class="text-[10px] tracking-ultra text-lumea-sand font-mono uppercase">CUCINA A VISTA</span>
+            </div>
+            <div class="flex flex-col items-center">
+              <span class="font-serif text-5xl text-lumea-gold font-light mb-1">1</span>
+              <span class="text-[10px] tracking-ultra text-lumea-sand font-mono uppercase">ESPERIENZA UNICA</span>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- SECTION 8: GALLERIA IMMERSIVA -->
+      <section id="galleria" class="py-32 px-6 md:px-12 bg-lumea-black">
+        <div class="max-w-7xl mx-auto">
+          
+          <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div>
+              <span class="text-xs uppercase tracking-ultra font-mono text-lumea-gold block mb-2">03 / VISUALE</span>
+              <h2 class="font-serif text-4xl md:text-6xl text-lumea-cream font-light">Galleria Immersiva</h2>
+            </div>
+            <p class="text-lumea-muted text-sm font-light">
+              Fai clic su un'immagine per aprirla a schermo intero.
+            </p>
+          </div>
+
+          <!-- Asymmetric Photo Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <div onclick="openLightbox(0)" class="group relative aspect-[4/5] overflow-hidden border border-lumea-border cursor-pointer">
+              <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 filter brightness-90 group-hover:brightness-100" alt="Plating Detail">
+              <div class="absolute inset-0 bg-lumea-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span class="text-xs tracking-ultra font-mono uppercase text-lumea-cream border border-lumea-gold/60 px-4 py-2 bg-lumea-black/80">VIEW →</span>
+              </div>
+            </div>
+
+            <div onclick="openLightbox(1)" class="group relative aspect-[4/5] sm:aspect-auto lg:aspect-[4/5] sm:row-span-2 overflow-hidden border border-lumea-border cursor-pointer">
+              <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 filter brightness-90 group-hover:brightness-100" alt="Restaurant Ambiance">
+              <div class="absolute inset-0 bg-lumea-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span class="text-xs tracking-ultra font-mono uppercase text-lumea-cream border border-lumea-gold/60 px-4 py-2 bg-lumea-black/80">VIEW →</span>
+              </div>
+            </div>
+
+            <div onclick="openLightbox(2)" class="group relative aspect-[4/5] overflow-hidden border border-lumea-border cursor-pointer">
+              <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 filter brightness-90 group-hover:brightness-100" alt="Wine Glass Detail">
+              <div class="absolute inset-0 bg-lumea-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span class="text-xs tracking-ultra font-mono uppercase text-lumea-cream border border-lumea-gold/60 px-4 py-2 bg-lumea-black/80">VIEW →</span>
+              </div>
+            </div>
+
+            <div onclick="openLightbox(3)" class="group relative aspect-[4/5] overflow-hidden border border-lumea-border cursor-pointer">
+              <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 filter brightness-90 group-hover:brightness-100" alt="Chef Preparing Food">
+              <div class="absolute inset-0 bg-lumea-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span class="text-xs tracking-ultra font-mono uppercase text-lumea-cream border border-lumea-gold/60 px-4 py-2 bg-lumea-black/80">VIEW →</span>
+              </div>
+            </div>
+
+            <div onclick="openLightbox(4)" class="group relative aspect-[4/5] overflow-hidden border border-lumea-border cursor-pointer">
+              <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 filter brightness-90 group-hover:brightness-100" alt="Plated Dish Macro">
+              <div class="absolute inset-0 bg-lumea-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span class="text-xs tracking-ultra font-mono uppercase text-lumea-cream border border-lumea-gold/60 px-4 py-2 bg-lumea-black/80">VIEW →</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- LIGHTBOX MODAL -->
+      <div id="lightbox-modal" class="fixed inset-0 z-[110] bg-lumea-darker/95 backdrop-blur-xl hidden flex flex-col justify-between p-6 md:p-12">
+        <div class="flex items-center justify-between z-10">
+          <span id="lightbox-counter" class="font-mono text-xs text-lumea-gold uppercase tracking-widest">01 / 05</span>
+          <button onclick="closeLightbox()" class="text-lumea-cream hover:text-lumea-gold p-2">
+            <i data-lucide="x" class="w-8 h-8"></i>
+          </button>
+        </div>
+
+        <div class="relative flex-1 flex items-center justify-center my-6">
+          <img id="lightbox-img" src="" class="max-h-[75vh] max-w-full object-contain border border-lumea-border" alt="Lightbox Fullscreen View">
+        </div>
+
+        <div class="flex items-center justify-between max-w-xs mx-auto w-full z-10">
+          <button onclick="prevLightbox()" class="p-3 border border-lumea-border text-lumea-cream hover:border-lumea-gold hover:text-lumea-gold transition-colors">
+            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+          </button>
+          <span class="text-xs tracking-ultra text-lumea-sand font-mono">NAVIGA</span>
+          <button onclick="nextLightbox()" class="p-3 border border-lumea-border text-lumea-cream hover:border-lumea-gold hover:text-lumea-gold transition-colors">
+            <i data-lucide="chevron-right" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION 9: ESPERIENZA SENSORIALE -->
+      <section id="esperienza" class="py-32 px-6 md:px-12 bg-lumea-darker border-t border-lumea-border">
+        <div class="max-w-7xl mx-auto">
+          
+          <div class="text-center max-w-2xl mx-auto mb-20">
+            <span class="text-xs uppercase tracking-ultra font-mono text-lumea-gold mb-3 block">IL RITUALE</span>
+            <h2 class="font-serif text-4xl md:text-6xl text-lumea-cream font-light mb-4">Non è una cena. È un rituale.</h2>
+            <p class="text-sm text-lumea-sand/80 font-light">
+              I quattro momenti che compongono l'esperienza dal momento in cui varchi la nostra porta.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <!-- Moment 1 -->
+            <div class="p-8 bg-lumea-card border border-lumea-border flex flex-col justify-between h-80">
+              <span class="font-mono text-xs text-lumea-gold">MOMENTO I</span>
+              <div>
+                <h3 class="font-serif text-3xl text-lumea-cream mb-3">ARRIVO</h3>
+                <p class="text-xs text-lumea-sand/70 font-light leading-relaxed">
+                  L'accoglienza riservata nell'angolo lounge. Un aperitivo di benvenuto ideato per risvegliare le papille gustative.
+                </p>
+              </div>
+            </div>
+
+            <!-- Moment 2 -->
+            <div class="p-8 bg-lumea-card border border-lumea-border flex flex-col justify-between h-80">
+              <span class="font-mono text-xs text-lumea-gold">MOMENTO II</span>
+              <div>
+                <h3 class="font-serif text-3xl text-lumea-cream mb-3">ATTESA</h3>
+                <p class="text-xs text-lumea-sand/70 font-light leading-relaxed">
+                  L'accomodamento al tavolo. La musica d'ambiente e la luce calda calibrata su misura per preparare lo spirito.
+                </p>
+              </div>
+            </div>
+
+            <!-- Moment 3 -->
+            <div class="p-8 bg-lumea-card border border-lumea-border flex flex-col justify-between h-80">
+              <span class="font-mono text-xs text-lumea-gold">MOMENTO III</span>
+              <div>
+                <h3 class="font-serif text-3xl text-lumea-cream mb-3">SCOPERTA</h3>
+                <p class="text-xs text-lumea-sand/70 font-light leading-relaxed">
+                  Il susseguirsi delle portate e il racconto diretto del personale di sala e dello chef durante il servizio.
+                </p>
+              </div>
+            </div>
+
+            <!-- Moment 4 -->
+            <div class="p-8 bg-lumea-card border border-lumea-border flex flex-col justify-between h-80">
+              <span class="font-mono text-xs text-lumea-gold">MOMENTO IV</span>
+              <div>
+                <h3 class="font-serif text-3xl text-lumea-cream mb-3">RICORDO</h3>
+                <p class="text-xs text-lumea-sand/70 font-light leading-relaxed">
+                  La conclusione con la piccola pasticceria d'autore, distillati rari e l'omaggio personalizzato da portare a casa.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 10: PRENOTAZIONE -->
+      <section id="prenota" class="py-32 px-6 md:px-12 bg-lumea-black relative">
+        <div class="max-w-4xl mx-auto bg-lumea-card border border-lumea-border p-8 md:p-16 relative">
+          
+          <div class="text-center mb-12">
+            <span class="text-xs uppercase tracking-ultra font-mono text-lumea-gold mb-3 block">RESERVE A TABLE</span>
+            <h2 class="font-serif text-3xl md:text-5xl text-lumea-cream font-light mb-4">Il Tuo Tavolo Ti Aspetta</h2>
+            <p class="text-xs text-lumea-sand/80 font-light">
+              Per garantire un'esperienza impeccabile, vi preghiamo di riservare con anticipo.
+            </p>
+          </div>
+
+          <!-- Reservation Form -->
+          <form id="reservation-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              
+              <!-- Date -->
+              <div>
+                <label class="block text-[10px] font-mono tracking-widest text-lumea-gold uppercase mb-2">DATA</label>
+                <input type="date" required class="w-full bg-lumea-black border border-lumea-border text-lumea-cream p-3 text-xs focus:border-lumea-gold focus:outline-none">
+              </div>
+
+              <!-- Time -->
+              <div>
+                <label class="block text-[10px] font-mono tracking-widest text-lumea-gold uppercase mb-2">ORARIO</label>
+                <select required class="w-full bg-lumea-black border border-lumea-border text-lumea-cream p-3 text-xs focus:border-lumea-gold focus:outline-none">
+                  <option value="">Seleziona Orario</option>
+                  <option value="19:30">19:30</option>
+                  <option value="20:00">20:00</option>
+                  <option value="20:30">20:30</option>
+                  <option value="21:00">21:00</option>
+                  <option value="21:30">21:30</option>
+                </select>
+              </div>
+
+              <!-- Guests -->
+              <div>
+                <label class="block text-[10px] font-mono tracking-widest text-lumea-gold uppercase mb-2">OSPITI</label>
+                <select required class="w-full bg-lumea-black border border-lumea-border text-lumea-cream p-3 text-xs focus:border-lumea-gold focus:outline-none">
+                  <option value="2">2 Persone</option>
+                  <option value="3">3 Persone</option>
+                  <option value="4">4 Persone</option>
+                  <option value="5">5 Persone</option>
+                  <option value="6">6+ Persone (Privato)</option>
+                </select>
+              </div>
+
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              <!-- Name -->
+              <div>
+                <label class="block text-[10px] font-mono tracking-widest text-lumea-gold uppercase mb-2">NOME & COGNOME</label>
+                <input type="text" placeholder="Alessandro Rossi" required class="w-full bg-lumea-black border border-lumea-border text-lumea-cream p-3 text-xs focus:border-lumea-gold focus:outline-none">
+              </div>
+
+              <!-- Email -->
+              <div>
+                <label class="block text-[10px] font-mono tracking-widest text-lumea-gold uppercase mb-2">EMAIL</label>
+                <input type="email" placeholder="nome@esempio.com" required class="w-full bg-lumea-black border border-lumea-border text-lumea-cream p-3 text-xs focus:border-lumea-gold focus:outline-none">
+              </div>
+
+            </div>
+
+            <!-- Phone -->
+            <div>
+              <label class="block text-[10px] font-mono tracking-widest text-lumea-gold uppercase mb-2">TELEFONO</label>
+              <input type="tel" placeholder="+39 333 000 0000" required class="w-full bg-lumea-black border border-lumea-border text-lumea-cream p-3 text-xs focus:border-lumea-gold focus:outline-none">
+            </div>
+
+            <!-- Notes -->
+            <div>
+              <label class="block text-[10px] font-mono tracking-widest text-lumea-gold uppercase mb-2">RICHIESTE SPECIALI / ALLERGIE</label>
+              <textarea rows="3" placeholder="Informaci su eventuali allergie o occasioni speciali..." class="w-full bg-lumea-black border border-lumea-border text-lumea-cream p-3 text-xs focus:border-lumea-gold focus:outline-none"></textarea>
+            </div>
+
+            <button type="submit" class="w-full py-4 bg-lumea-gold text-lumea-black font-semibold tracking-ultra text-xs uppercase hover:bg-lumea-cream transition-colors duration-300">
+              RICHIEDI LA PRENOTAZIONE
+            </button>
+
+            <p class="text-[11px] text-lumea-muted text-center italic mt-4">
+              Per eventi privati oltre 6 ospiti o richieste speciali, si prega di contattare direttamente la reception al numero +39 02 0000 0000.
+            </p>
+
+          </form>
+
+        </div>
+      </section>
+
+      <!-- SECTION 11: WOW FINAL REVEAL MOMENT -->
+      <section id="wow-reveal" class="py-40 px-6 bg-lumea-darker text-center border-t border-lumea-border relative overflow-hidden">
+        <div class="max-w-4xl mx-auto">
+          <span class="font-serif text-4xl sm:text-6xl md:text-7xl font-light text-lumea-cream tracking-wide block mb-6">
+            LUMÉA
+          </span>
+          <p id="wow-quote" class="font-serif italic text-2xl sm:text-3xl md:text-4xl text-lumea-gold/90 font-light mb-10 transition-all duration-1000">
+            “Tornerai per il gusto. <br/>Resterai per il ricordo.”
+          </p>
+          <button onclick="openBookingModal()" class="inline-flex items-center space-x-3 text-xs tracking-ultra font-mono text-lumea-sand hover:text-lumea-gold transition-colors uppercase border-b border-lumea-gold/40 pb-1">
+            <span>PRENOTA IL TUO TAVOLO ADESSO</span>
+            <span>→</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer id="contatti" class="bg-lumea-black pt-24 pb-12 px-6 md:px-12 border-t border-lumea-border">
+        <div class="max-w-7xl mx-auto">
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+            
+            <!-- Col 1: Brand -->
+            <div>
+              <span class="font-serif text-3xl font-light tracking-widest text-lumea-cream block mb-3">LUMÉA</span>
+              <p class="font-serif italic text-sm text-lumea-gold mb-6">“La materia incontra la meraviglia.”</p>
+              <p class="text-xs text-lumea-sand/70 font-light leading-relaxed">
+                Ristorante di alta cucina contemporanea italiana nel cuore di Milano.
+              </p>
+            </div>
+
+            <!-- Col 2: Navigation -->
+            <div>
+              <span class="text-xs font-mono tracking-widest text-lumea-gold uppercase block mb-6">SITO</span>
+              <ul class="space-y-3 text-xs text-lumea-sand/80 font-light">
+                <li><a href="#ristorante" class="hover:text-lumea-gold transition-colors">Il Ristorante</a></li>
+                <li><a href="#menu" class="hover:text-lumea-gold transition-colors">Menu Degustazione</a></li>
+                <li><a href="#chef" class="hover:text-lumea-gold transition-colors">Chef Alessandro Verri</a></li>
+                <li><a href="#esperienza" class="hover:text-lumea-gold transition-colors">Esperienza Sensoriale</a></li>
+                <li><a href="#galleria" class="hover:text-lumea-gold transition-colors">Galleria Fotografica</a></li>
+              </ul>
+            </div>
+
+            <!-- Col 3: Address & Info -->
+            <div>
+              <span class="text-xs font-mono tracking-widest text-lumea-gold uppercase block mb-6">CONTATTI</span>
+              <ul class="space-y-3 text-xs text-lumea-sand/80 font-light">
+                <li>Via della Luce 18, 20121 Milano (MI)</li>
+                <li>T. +39 02 0000 0000</li>
+                <li>E. hello@lumea-restaurant.it</li>
+                <li class="pt-2 text-lumea-muted">Mar - Dom: 19:30 – 00:00</li>
+                <li class="text-lumea-muted">Lunedì: Chiuso</li>
+              </ul>
+            </div>
+
+            <!-- Col 4: Social -->
+            <div>
+              <span class="text-xs font-mono tracking-widest text-lumea-gold uppercase block mb-6">SEGUICI</span>
+              <div class="flex space-x-4 mb-6">
+                <a href="#" class="p-2 border border-lumea-border text-lumea-sand hover:text-lumea-gold hover:border-lumea-gold transition-colors">
+                  <i data-lucide="instagram" class="w-5 h-5"></i>
+                </a>
+                <a href="#" class="p-2 border border-lumea-border text-lumea-sand hover:text-lumea-gold hover:border-lumea-gold transition-colors">
+                  <i data-lucide="facebook" class="w-5 h-5"></i>
+                </a>
+              </div>
+              <p class="text-[11px] text-lumea-muted font-light">
+                Iscriviti alla newsletter privata per eventi esclusivi e nuovi menu di stagione.
+              </p>
+            </div>
+
+          </div>
+
+          <div class="pt-8 border-t border-lumea-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-mono text-lumea-muted uppercase">
+            <span>© 2026 LUMÉA — CUCINA D’AUTORE. ALL RIGHTS RESERVED.</span>
+            <div class="flex space-x-6">
+              <a href="#" class="hover:text-lumea-gold transition-colors">PRIVACY POLICY</a>
+              <a href="#" class="hover:text-lumea-gold transition-colors">COOKIE POLICY</a>
+              <a href="#" class="hover:text-lumea-gold transition-colors">CREDITS</a>
+            </div>
+          </div>
+
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- BOOKING MODAL POPUP -->
+  <div id="booking-modal" class="fixed inset-0 z-[120] bg-lumea-darker/95 backdrop-blur-xl hidden flex items-center justify-center p-6">
+    <div class="bg-lumea-card border border-lumea-border max-w-xl w-full p-8 md:p-12 relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeBookingModal()" class="absolute top-6 right-6 text-lumea-sand hover:text-lumea-gold">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="text-center mb-8">
+        <span class="text-[10px] font-mono tracking-widest text-lumea-gold uppercase block mb-1">PRENOTAZIONE VIP</span>
+        <h3 id="modal-menu-title" class="font-serif text-3xl text-lumea-cream">LUMÉA Milano</h3>
+      </div>
+
+      <form onsubmit="handleModalSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-[10px] font-mono text-lumea-gold uppercase mb-1">DATA</label>
+          <input type="date" required class="w-full bg-lumea-black border border-lumea-border text-lumea-cream p-3 text-xs focus:border-lumea-gold focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-[10px] font-mono text-lumea-gold uppercase mb-1">OSPITI</label>
+          <select required class="w-full bg-lumea-black border border-lumea-border text-lumea-cream p-3 text-xs focus:border-lumea-gold focus:outline-none">
+            <option value="2">2 Ospiti</option>
+            <option value="3">3 Ospiti</option>
+            <option value="4">4 Ospiti</option>
+            <option value="5">5+ Ospiti</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[10px] font-mono text-lumea-gold uppercase mb-1">NOME COMPLETO</label>
+          <input type="text" required placeholder="Il tuo nome" class="w-full bg-lumea-black border border-lumea-border text-lumea-cream p-3 text-xs focus:border-lumea-gold focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-[10px] font-mono text-lumea-gold uppercase mb-1">TELEFONO DI CONTATTO</label>
+          <input type="tel" required placeholder="+39 ..." class="w-full bg-lumea-black border border-lumea-border text-lumea-cream p-3 text-xs focus:border-lumea-gold focus:outline-none">
+        </div>
+        <button type="submit" class="w-full py-4 bg-lumea-gold text-lumea-black font-semibold text-xs tracking-ultra uppercase mt-4">
+          CONFERMA RICHIESTA
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // 1. LENIS SMOOTH SCROLL INITIALIZATION
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      touchMultiplier: 2
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Synchronize GSAP ScrollTrigger with Lenis
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0, 0);
+
+    // 2. CUSTOM CURSOR TRAILING EFFECT
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorCircle = document.getElementById('cursor-circle');
+
+    window.addEventListener('mousemove', (e) => {
+      const { clientX, clientY } = e;
+      gsap.to(cursorDot, { x: clientX, y: clientY, duration: 0.1 });
+      gsap.to(cursorCircle, { x: clientX, y: clientY, duration: 0.35 });
+    });
+
+    // Hover Scaling for Cursor
+    document.querySelectorAll('a, button, input, select, textarea, .group').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        gsap.to(cursorCircle, { scale: 1.8, borderColor: '#D4AF37', duration: 0.2 });
+      });
+      el.addEventListener('mouseleave', () => {
+        gsap.to(cursorCircle, { scale: 1, borderColor: 'rgba(212, 175, 55, 0.6)', duration: 0.2 });
+      });
+    });
+
+    // 3. CINEMATIC INTRO SEQUENCE ON LOAD
+    window.addEventListener('DOMContentLoaded', () => {
+      const tl = gsap.timeline({
+        onComplete: () => {
+          document.getElementById('intro-loader').style.pointerEvents = 'none';
+        }
+      });
+
+      tl.to('#intro-line', { height: '80px', duration: 0.8, ease: 'power2.inOut' })
+        .to('#intro-logo', { opacity: 1, duration: 0.8, ease: 'power2.out' }, "-=0.2")
+        .to('#intro-sub', { opacity: 1, duration: 0.6 }, "-=0.4")
+        .to('#intro-loader', { opacity: 0, duration: 1, delay: 0.8, ease: 'power3.inOut' })
+        .to('#hero-sub', { opacity: 1, y: 0, duration: 0.8 }, "-=0.4")
+        .to('#hero-title', { opacity: 1, y: 0, duration: 1 }, "-=0.6")
+        .to('#hero-payoff', { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
+        .to('#hero-cta', { opacity: 1, y: 0, duration: 0.8 }, "-=0.6");
+    });
+
+    // 4. HEADER NAVBAR TRANSITION & READING PROGRESS BAR
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('main-header');
+      const progressBar = document.getElementById('progress-bar');
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / totalHeight) * 100;
+
+      progressBar.style.width = `${progress}%`;
+
+      if (window.scrollY > 80) {
+        header.classList.add('glass-nav', 'py-4');
+        header.classList.remove('py-6');
+      } else {
+        header.classList.remove('glass-nav');
+        header.classList.add('py-6');
+      }
+    });
+
+    // 5. MOBILE MENU TOGGLE
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const isOpen = !menu.classList.contains('pointer-events-none');
+
+      if (!isOpen) {
+        menu.classList.remove('pointer-events-none', 'opacity-0', 'translate-y-full');
+        menu.classList.add('opacity-100', 'translate-y-0');
+        lenis.stop();
+      } else {
+        menu.classList.add('pointer-events-none', 'opacity-0', 'translate-y-full');
+        menu.classList.remove('opacity-100', 'translate-y-0');
+        lenis.start();
+      }
+    }
+
+    // 6. GSAP SCROLLTRIGGER ANIMATIONS
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Editorial Manifesto Reveal
+    gsap.from('#editorial-text', {
+      scrollTrigger: {
+        trigger: '#editorial-text',
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      },
+      opacity: 0,
+      y: 40,
+      filter: 'blur(10px)',
+      duration: 1.2,
+      ease: 'power3.out'
+    });
+
+    // Signature Dishes Horizontal Scroll Animation
+    const track = document.getElementById('horizontal-track');
+    if (track) {
+      gsap.to(track, {
+        x: () => -(track.scrollWidth - window.innerWidth + 100),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#signature-section',
+          pin: true,
+          scrub: 1,
+          end: () => '+=' + track.scrollWidth
+        }
+      });
+    }
+
+    // WOW Quote Dissolve Effect
+    gsap.from('#wow-quote', {
+      scrollTrigger: {
+        trigger: '#wow-reveal',
+        start: 'top 75%'
+      },
+      scale: 0.95,
+      opacity: 0,
+      duration: 1.5,
+      ease: 'power2.out'
+    });
+
+    // 7. LIGHTBOX MODAL LOGIC
+    const galleryImages = [
+      'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?q=80&w=1000&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1000&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1000&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1578474846511-04ba529f0b88?q=80&w=1000&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop'
+    ];
+    let currentLightboxIndex = 0;
+
+    function openLightbox(index) {
+      currentLightboxIndex = index;
+      updateLightbox();
+      document.getElementById('lightbox-modal').classList.remove('hidden');
+      lenis.stop();
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox-modal').classList.add('hidden');
+      lenis.start();
+    }
+
+    function updateLightbox() {
+      document.getElementById('lightbox-img').src = galleryImages[currentLightboxIndex];
+      document.getElementById('lightbox-counter').innerText = `0${currentLightboxIndex + 1} / 0${galleryImages.length}`;
+    }
+
+    function nextLightbox() {
+      currentLightboxIndex = (currentLightboxIndex + 1) % galleryImages.length;
+      updateLightbox();
+    }
+
+    function prevLightbox() {
+      currentLightboxIndex = (currentLightboxIndex - 1 + galleryImages.length) % galleryImages.length;
+      updateLightbox();
+    }
+
+    // Keybindings for Lightbox
+    window.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('lightbox-modal');
+      if (!modal.classList.contains('hidden')) {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') nextLightbox();
+        if (e.key === 'ArrowLeft') prevLightbox();
+      }
+    });
+
+    // 8. BOOKING MODAL & FORM HANDLERS
+    function openBookingModal(menuName) {
+      const modal = document.getElementById('booking-modal');
+      const title = document.getElementById('modal-menu-title');
+      if (menuName) {
+        title.innerText = `Percorso: ${menuName}`;
+      } else {
+        title.innerText = 'Prenotazione LUMÉA Milano';
+      }
+      modal.classList.remove('hidden');
+      lenis.stop();
+    }
+
+    function closeBookingModal() {
+      document.getElementById('booking-modal').classList.add('hidden');
+      lenis.start();
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      alert("Grazie. La vostra richiesta di prenotazione per LUMÉA è stata inviata con successo. Il nostro concierge vi contatterà a breve.");
+      e.target.reset();
+    }
+
+    function handleModalSubmit(e) {
+      e.preventDefault();
+      alert("Richiesta confermata. Vi ricontatteremo telefonicamente entro 24 ore.");
+      closeBookingModal();
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
